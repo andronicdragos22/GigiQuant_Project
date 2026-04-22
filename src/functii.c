@@ -76,3 +76,19 @@ void free_list(Node *head)
         free(tmp);
     }
 }
+
+int isEmpty(Node *top)
+{
+    return top == NULL;
+}
+
+int pop(Node **top)
+{
+    if (isEmpty(*top))
+        return INT_MIN;
+    Node *temp = (*top);
+    int aux = temp->valoare;
+    *top = (*top)->next;
+    free(temp);
+    return aux;
+}
