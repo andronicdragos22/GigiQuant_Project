@@ -77,17 +77,20 @@ void free_list(Node *head)
     }
 }
 
-int isEmpty(Node *top)
+int isEmpty(const Node *top)
 {
     return top == NULL;
 }
 
-int pop(Node **top)
+double pop(Node **top)
 {
     if (isEmpty(*top))
-        return INT_MIN;
+    {
+        return 0.0;
+    }
+
     Node *temp = (*top);
-    int aux = temp->valoare;
+    double aux = temp->valoare;
     *top = (*top)->next;
     free(temp);
     return aux;

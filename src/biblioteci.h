@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <limits.h>
+#include <ctype.h>
+#include <string.h>
 
 struct Elem
 {
@@ -19,5 +21,5 @@ double calculeaza_Rm(Node *head, int n);
 double calculeaza_Volatilitatea(Node *head, int n, double Rm);
 void afisare_trunchiata(FILE *f, double val);
 void free_list(Node *head);
-int isEmpty(Node *top);
-int pop(Node **top);
+int isEmpty(const Node *top);
+double pop(Node **top);
