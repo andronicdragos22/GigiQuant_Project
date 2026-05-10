@@ -36,3 +36,5 @@ void afisare_trunchiata(FILE *f, double val);
 void free_list(Node *head);
 int isEmpty(const Node *top);
 double pop(Node **top);
+void adauga_in_lista_final(StockList **head, char *nume);
+TreeNode *oglindit(TreeNode *root, double preturi[][10], int col, int nr_zile);

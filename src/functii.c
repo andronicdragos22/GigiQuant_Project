@@ -95,3 +95,33 @@ double pop(Node **top)
     free(temp);
     return aux;
 }
+
+void adauga_in_lista_final(StockList **head, char *nume)
+{
+    StockList *nou = (StockList *)calloc(1, sizeof(StockList));
+    strcpy(nou->symbol, nume);
+    if (*head == NULL)
+        *head = nou;
+    else
+    {
+        StockList *aux = *head;
+        while (aux->next)
+            aux = aux->next;
+        aux->next = nou;
+    }
+}
+
+TreeNode *oglindit(TreeNode *root, double preturi[][10], int col, int nr_zile)
+{
+    TreeNode *curr = root;
+    for (int i = 1; i < nr_zile; i++)
+    {
+        if (!curr)
+            return NULL;
+        if (preturi[i][col] < preturi[i - 1][col])
+            curr = curr->right;
+        else
+            curr = curr->left;
+    }
+    return curr;
+}

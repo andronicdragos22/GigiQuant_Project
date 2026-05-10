@@ -26,6 +26,51 @@ int main(int argc, char const *argv[])
             fscanf(fin, "%lf", &preturi[zile][9]);
             zile++;
         }
+        TreeNode *root = (TreeNode *)calloc(1, sizeof(TreeNode));
+        for (int j = 0; j < 10; j++)
+        {
+            TreeNode *curr = root;
+            for (int i = 1; i < zile; i++)
+            {
+                if (preturi[i][j] < preturi[i - 1][j])
+                {
+                    if (!curr->left)
+                        curr->left = (TreeNode *)calloc(1, sizeof(TreeNode));
+                    curr = curr->left;
+                }
+                else
+                {
+                    if (!curr->right)
+                        curr->right = (TreeNode *)calloc(1, sizeof(TreeNode));
+                    curr = curr->right;
+                }
+            }
+            adauga_in_lista_final(&(curr->stocks), nume[j]);
+        }
+        fclose(fin);
+        FILE *fout = fopen(argv[2], "w");
+        for (int i = 0; i < 10; i++)
+        {
+            TreeNode *nod_ogl = oglindit(root, preturi, i, zile);
+            if (nod_ogl && nod_ogl->stocks)
+            {
+                StockList *s = nod_ogl->stocks;
+                while (s)
+                {
+                    int id = -1;
+                    for (int k = 0; k < 10; k++)
+                        if (strcmp(nume[k], s->symbol) == 0)
+                        {
+                            id = k;
+                            break;
+                        }
+                    if (i < id)
+                        fprintf(fout, "%s-%s\n", nume[i], s->symbol);
+                    s = s->next;
+                }
+            }
+        }
+        fclose(fout);
     }
     else if (!isdigit(elem[0]))
     {
