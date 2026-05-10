@@ -3,12 +3,31 @@
 int main(int argc, char const *argv[])
 {
     FILE *f = fopen(argv[1], "r");
-    char elem[50];
+    char elem[60];
     if (f == NULL)
         return 1;
-    fscanf(f, "%49s", elem);
+    fscanf(f, "%59s", elem);
     fclose(f);
-    if (!isdigit(elem[0]))
+    if (strchr(elem, ','))
+    {
+        FILE *fin = fopen(argv[1], "r");
+        char nume[10][5];
+        double preturi[100][10];
+        int zile = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            fscanf(fin, "%[^, \n]", nume[i]);
+            fgetc(fin);
+        }
+        while (fscanf(fin, "%lf,", &preturi[zile][0]) == 1)
+        {
+            for (int j = 1; j < 9; j++)
+                fscanf(fin, "%lf,", &preturi[zile][j]);
+            fscanf(fin, "%lf", &preturi[zile][9]);
+            zile++;
+        }
+    }
+    else if (!isdigit(elem[0]))
     {
         FILE *fin = fopen(argv[1], "r");
         Node *s1 = NULL;

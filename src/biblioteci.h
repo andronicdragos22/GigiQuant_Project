@@ -14,6 +14,19 @@ struct Elem
 
 typedef struct Elem Node;
 
+typedef struct StockList
+{
+    char symbol[5];
+    struct StockList *next;
+} StockList;
+
+typedef struct TreeNode
+{
+    StockList *stocks;
+    struct TreeNode *left;
+    struct TreeNode *right;
+} TreeNode;
+
 void adaugare_inceput(Node **head, double v);
 void adaugare_final(Node **head, double v);
 void calculeaza_Rt(Node *head);
