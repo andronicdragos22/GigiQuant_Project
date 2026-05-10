@@ -96,7 +96,7 @@ double pop(Node **top)
     return aux;
 }
 
-void adauga_in_lista_final(StockList **head, char *nume)
+void adauga_in_lista_final(StockList **head, const char *nume)
 {
     StockList *nou = (StockList *)calloc(1, sizeof(StockList));
     strcpy(nou->symbol, nume);
@@ -111,7 +111,7 @@ void adauga_in_lista_final(StockList **head, char *nume)
     }
 }
 
-TreeNode *oglindit(TreeNode *root, double preturi[][10], int col, int nr_zile)
+TreeNode *oglindit(TreeNode *root, const double preturi[][10], int col, int nr_zile)
 {
     TreeNode *curr = root;
     for (int i = 1; i < nr_zile; i++)

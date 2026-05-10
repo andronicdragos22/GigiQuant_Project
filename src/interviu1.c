@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
         int zile = 0;
         for (int i = 0; i < 10; i++)
         {
-            fscanf(fin, "%[^, \n]", nume[i]);
+            fscanf(fin, "%5[^, \n]", nume[i]);
             fgetc(fin);
         }
         while (fscanf(fin, "%lf,", &preturi[zile][0]) == 1)
@@ -49,6 +49,7 @@ int main(int argc, char const *argv[])
         }
         fclose(fin);
         FILE *fout = fopen(argv[2], "w");
+        int prim = 1;
         for (int i = 0; i < 10; i++)
         {
             TreeNode *nod_ogl = oglindit(root, preturi, i, zile);
@@ -65,7 +66,13 @@ int main(int argc, char const *argv[])
                             break;
                         }
                     if (i < id)
-                        fprintf(fout, "%s-%s\n", nume[i], s->symbol);
+                    {
+                        if (!prim)
+                            fprintf(fout, "\n");
+                        fprintf(fout, "%s-%s", nume[i], s->symbol);
+                        prim = 0;
+                    }
+
                     s = s->next;
                 }
             }
