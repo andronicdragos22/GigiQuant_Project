@@ -25,7 +25,92 @@ int main(int argc, char const *argv[])
     fclose(f);
     if (task == 4)
     {
+        FILE *fin = fopen(argv[1], "r");
+        int n, k;
+        double delta, p_start, p_target;
+        fscanf(fin, "%d %lf %d %lf %lf", &n, &delta, &k, &p_start, &p_target);
+        double *preturi = (double *)malloc(n * sizeof(double));
+        long long *stari = (long long *)malloc(n * sizeof(long long));
+        for (int i = 0; i < n; i++)
+        {
+            fscanf(fin, "%lf", &preturi[i]);
+            stari[i] = floor(preturi[i] / delta);
         }
+        long long st_start = floor(p_start / delta);
+        long long st_target = floor(p_target / delta);
+        long long minim = st_start;
+        long long maxim = st_start;
+        if (st_target < minim)
+            minim = st_target;
+        if (st_target > maxim)
+            maxim = st_target;
+        for (int i = 0; i < n; i++)
+        {
+            if (stari[i] < minim)
+                minim = stari[i];
+            if (stari[i] > maxim)
+                maxim = stari[i];
+        }
+        int nr_stari = maxim - minim + 1;
+        int *iesiri = (int *)calloc(nr_stari, sizeof(int));
+        for (int i = 0; i < n - 1; i++)
+        {
+            int de_la = stari[i] - minim;
+            iesiri[de_la]++;
+        }
+        int id_start = st_start - minim;
+        int id_target = st_target - minim;
+        Fractie *acum = (Fractie *)malloc(nr_stari * sizeof(Fractie));
+        Fractie *urmator = (Fractie *)malloc(nr_stari * sizeof(Fractie));
+        for (int i = 0; i < nr_stari; i++)
+        {
+            acum[i].numarator = 0;
+            acum[i].numitor = 1;
+        }
+        acum[id_start].numarator = 1;
+        acum[id_start].numitor = 1;
+        fclose(fin);
+        FILE *fout = fopen(argv[2], "w");
+        for (int zi = 1; zi <= k; zi++)
+        {
+            if (zi > 1)
+            {
+                for (int i = 0; i < nr_stari; i++)
+                {
+                    urmator[i].numarator = 0;
+                    urmator[i].numitor = 1;
+                }
+                for (int i = 0; i < n - 1; i++)
+                {
+                    int de_la = stari[i] - minim;
+                    int la = stari[i + 1] - minim;
+                    if (acum[de_la].numarator > 0 && iesiri[de_la] > 0)
+                    {
+                        Fractie muchie = {1, iesiri[de_la]};
+                        Fractie ramura_noua = inmultire(acum[de_la], muchie);
+                        urmator[la] = adunare(urmator[la], ramura_noua);
+                    }
+                }
+                for (int i = 0; i < nr_stari; i++)
+                {
+                    acum[i] = urmator[i];
+                }
+                fprintf(fout, "\n");
+            }
+            if (acum[id_target].numarator == 0)
+                fprintf(fout, "0");
+            else if (acum[id_target].numarator == acum[id_target].numitor)
+                fprintf(fout, "1");
+            else
+                fprintf(fout, "%lld/%lld", acum[id_target].numarator, acum[id_target].numitor);
+        }
+        fclose(fout);
+        free(iesiri);
+        free(preturi);
+        free(stari);
+        free(acum);
+        free(urmator);
+    }
     else if (task == 3)
     {
         FILE *fin = fopen(argv[1], "r");
@@ -90,7 +175,6 @@ int main(int argc, char const *argv[])
                         fprintf(fout, "%s-%s", nume[i], s->symbol);
                         prim = 0;
                     }
-
                     s = s->next;
                 }
             }

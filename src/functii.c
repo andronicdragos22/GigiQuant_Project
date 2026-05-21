@@ -125,3 +125,43 @@ TreeNode *oglindit(TreeNode *root, const double preturi[][10], int col, int nr_z
     }
     return curr;
 }
+
+long long cmmdc(long long a, long long b)
+{
+    while (b)
+    {
+        long long t = a % b;
+        a = b;
+        b = t;
+    }
+    return a;
+}
+
+Fractie simplifica(Fractie f)
+{
+    if (f.numarator == 0)
+    {
+        f.numitor = 1;
+        return f;
+    }
+    long long div = cmmdc(f.numarator, f.numitor);
+    f.numarator /= div;
+    f.numitor /= div;
+    return f;
+}
+
+Fractie inmultire(Fractie a, Fractie b)
+{
+    Fractie aux;
+    aux.numarator = a.numarator * b.numarator;
+    aux.numitor = a.numitor * b.numitor;
+    return simplifica(aux);
+}
+
+Fractie adunare(Fractie a, Fractie b)
+{
+    Fractie aux;
+    aux.numarator = a.numarator * b.numitor + b.numarator * a.numitor;
+    aux.numitor = a.numitor * b.numitor;
+    return simplifica(aux);
+}

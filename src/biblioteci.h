@@ -44,3 +44,7 @@ int isEmpty(const Node *top);
 double pop(Node **top);
 void adauga_in_lista_final(StockList **head, const char *nume);
 TreeNode *oglindit(TreeNode *root, const double preturi[][10], int col, int nr_zile);
+long long cmmdc(long long a, long long b);
+Fractie simplifica(Fractie f);
+Fractie inmultire(Fractie a, Fractie b);
+Fractie adunare(Fractie a, Fractie b);
