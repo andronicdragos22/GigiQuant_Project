@@ -180,6 +180,7 @@ int main(int argc, char const *argv[])
             }
         }
         fclose(fout);
+        free_tree(root);
     }
     else if (task == 2)
     {
@@ -231,6 +232,9 @@ int main(int argc, char const *argv[])
             zi++;
         }
         fclose(fout);
+        free_list(s1);
+        free_list(s2);
+        free_list(s3);
     }
     else if (task == 1)
     {

@@ -126,6 +126,25 @@ TreeNode *oglindit(TreeNode *root, const double preturi[][10], int col, int nr_z
     return curr;
 }
 
+void free_tree(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+
+    StockList *head = root->stocks;
+    while (head != NULL)
+    {
+        StockList *tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+
+    free_tree(root->left);
+    free_tree(root->right);
+
+    free(root);
+}
+
 long long cmmdc(long long a, long long b)
 {
     while (b)
