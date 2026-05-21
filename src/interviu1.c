@@ -3,12 +3,30 @@
 int main(int argc, char const *argv[])
 {
     FILE *f = fopen(argv[1], "r");
-    char elem[60];
+    char elem1[60], elem2[60], elem3[60];
+    int task = 0;
     if (f == NULL)
         return 1;
-    fscanf(f, "%59s", elem);
+    fscanf(f, " %59s", elem1);
+
+    if (strchr(elem1, ','))
+        task = 3;
+    else if (!isdigit(elem1[0]))
+        task = 2;
+    else
+    {
+        fscanf(f, " %59s", elem2);
+        fscanf(f, " %59s", elem3);
+        if (strchr(elem3, '.'))
+            task = 1;
+        else
+            task = 4;
+    }
     fclose(f);
-    if (strchr(elem, ','))
+    if (task == 4)
+    {
+        }
+    else if (task == 3)
     {
         FILE *fin = fopen(argv[1], "r");
         char nume[10][5];
@@ -79,7 +97,7 @@ int main(int argc, char const *argv[])
         }
         fclose(fout);
     }
-    else if (!isdigit(elem[0]))
+    else if (task == 2)
     {
         FILE *fin = fopen(argv[1], "r");
         Node *s1 = NULL;
@@ -130,8 +148,7 @@ int main(int argc, char const *argv[])
         }
         fclose(fout);
     }
-
-    else
+    else if (task == 1)
     {
         FILE *fin = fopen(argv[1], "r");
         int n;

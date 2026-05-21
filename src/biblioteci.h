@@ -27,6 +27,12 @@ typedef struct TreeNode
     struct TreeNode *right;
 } TreeNode;
 
+typedef struct Fractie
+{
+    long long numarator;
+    long long numitor;
+} Fractie;
+
 void adaugare_inceput(Node **head, double v);
 void adaugare_final(Node **head, double v);
 void calculeaza_Rt(Node *head);
